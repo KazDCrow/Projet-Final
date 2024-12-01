@@ -102,7 +102,16 @@ namespace Projet_Final.Classes
 
         public void supprimerAdherent(string _id)
         {
-
+            MySqlCommand commande = new MySqlCommand();
+            commande.Connection = con;
+            commande.CommandText = "select f_delete_adherent(@id)";
+            commande.Parameters.AddWithValue("@id", _id);
+            
+            con.Open(); 
+            commande.Prepare();
+            commande.ExecuteNonQuery();
+            con.Close();
+            getAdherent();
         }
     }
 }

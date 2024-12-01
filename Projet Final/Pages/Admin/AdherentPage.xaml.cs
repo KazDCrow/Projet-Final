@@ -49,11 +49,14 @@ namespace Projet_Final.Pages.Admin
 
         private void btn_modifier_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private async void btn_supprimer_Click(object sender, RoutedEventArgs e)
         {
+            Button btn = (Button)sender;
+            Adherent a = (Adherent)btn.DataContext;
+
             ContentDialog dialog = new ContentDialog();
             dialog.XamlRoot = mainGrid.XamlRoot;
             dialog.Title = "Attention";
@@ -66,7 +69,16 @@ namespace Projet_Final.Pages.Admin
 
             if (resultat == ContentDialogResult.Primary) //si on clique sur OUI
             {
-                SingletonBD.getInstance();
+                SingletonBD.getInstance().supprimerAdherent(a.Id);
+                ContentDialog dialog2 = new ContentDialog();
+                dialog2.XamlRoot = mainGrid.XamlRoot;
+                dialog2.Title = "Suppression réalisé";
+                dialog2.IsPrimaryButtonEnabled = false;
+                dialog2.CloseButtonText = "Fermer";
+                dialog2.DefaultButton = ContentDialogButton.Primary;
+                dialog2.Content = "La suppression a été effectué.";
+
+                resultat = await dialog2.ShowAsync();
             }
         }
     }
