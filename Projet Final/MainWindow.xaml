@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Projet_Final.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Projet_Final"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Projet Final">
+
+    <Grid>
+        <NavigationView x:Name="navView" Visibility="Collapsed"
+         PaneDisplayMode="Top"
+         IsBackButtonVisible="Collapsed"
+         IsSettingsVisible="False"
+         SelectionChanged="navView_SelectionChanged"
+         >
+            <NavigationView.MenuItems>
+                <NavigationViewItemHeader Content="Administrateur" Name="adminNav_header" Visibility="Collapsed"/>
+                <NavigationViewItem Content="Adhérents" x:Name="adminNav_iAdherent" Icon="ContactInfo" Visibility="Collapsed"/>
+                <NavigationViewItem Content="Séances" x:Name="adminNav_iSeance" Icon="Calendar" Visibility="Collapsed"/>
+                <NavigationViewItem Content="Activités" x:Name="adminNav_iActivite" Icon="Camera" Visibility="Collapsed"/>
+                <NavigationViewItem Content="Statistique" x:Name="adminNav_iStatitistique" Icon="Calculator" Visibility="Collapsed"/>
+
+                <NavigationViewItemHeader Content="Choix des activités" Name="userNav_header" Visibility="Collapsed"/>
+                <NavigationViewItem Content="Activités" x:Name="userNav_activite" Icon="Camera" Visibility="Collapsed"/>
+            </NavigationView.MenuItems>
+
+            <NavigationView.PaneCustomContent>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" 
+                       HorizontalAlignment="Right" 
+                       Name="tb_userName" 
+                       Text="Nom d'utilisateur" 
+                       FontWeight="Bold" 
+                       Margin="0,0,16,0"/>
+                </StackPanel>
+            </NavigationView.PaneCustomContent>
+
+            <Frame x:Name="mainFrame"/>
+
+        </NavigationView>
+
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="700" Name="login_menu">
+            <StackPanel BorderBrush="LightGray" CornerRadius="25" BorderThickness="2" Spacing="40" Padding="40">
+                <TextBlock TextAlignment="Center" FontSize="24" FontWeight="SemiBold" >Connexion</TextBlock>
+
+                <StackPanel Spacing="16">
+                    <StackPanel HorizontalAlignment="Center" Width="240" Spacing="8">
+                        <TextBlock FontSize="16" FontStyle="Italic">Identifiant</TextBlock>
+                        <TextBox Name="tb_id" HorizontalAlignment="Stretch"></TextBox>
+                        <TextBlock Name="error_id" Foreground="Red" FontSize="12"/>
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Center" Width="240" Spacing="8">
+                        <TextBlock FontSize="16" FontStyle="Italic">Mot de passe</TextBlock>
+                        <TextBox Name="tb_pass" HorizontalAlignment="Stretch"></TextBox>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Name="btn_connection" HorizontalAlignment="Center" Click="btn_connection_Click">Confirmer</Button>
+            </StackPanel>
+            <TextBlock
+           VerticalAlignment="Bottom" 
+           HorizontalAlignment="Left"
+               Margin="10 0 0 10"
+           Foreground="Gray">*Laisser le mot de passe vide si vous n'êtes pas un administrateur</TextBlock>
+        </Grid>
+    </Grid>
+</Window>
