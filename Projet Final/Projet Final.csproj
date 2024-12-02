@@ -15,6 +15,7 @@
   <ItemGroup>
     <None Remove="Dialogs\DialogueAjout.xaml" />
     <None Remove="Pages\Admin\AdherentPage.xaml" />
+    <None Remove="Pages\Admin\ModificationAdherent.xaml" />
     <None Remove="Pages\TestAdherentPage.xaml" />
     <None Remove="Pages\User\ActiviteUserPage.xaml" />
   </ItemGroup>
@@ -45,6 +46,11 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Admin\ModificationAdherent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\TestAdherentPage.xaml">

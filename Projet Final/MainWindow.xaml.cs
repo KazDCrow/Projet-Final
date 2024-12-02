@@ -25,6 +25,7 @@ namespace Projet_Final
         {
             this.InitializeComponent();
             SingletonBD.getInstance();
+            SingletonNavigation.getInstance().NavigationView = navView;
         }
 
         private void navView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -40,7 +41,7 @@ namespace Projet_Final
                 item = new NavigationViewItem();
             }
 
-            switch (item.Name)
+            switch (item?.Name)
             {
                 case "adminNav_iAdherent":
                     mainFrame.Navigate(typeof(AdherentPage));

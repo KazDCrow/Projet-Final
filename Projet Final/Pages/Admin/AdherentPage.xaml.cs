@@ -47,11 +47,6 @@ namespace Projet_Final.Pages.Admin
             var resultat = await dialogue.ShowAsync();
         }
 
-        private void btn_modifier_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private async void btn_supprimer_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
@@ -79,6 +74,14 @@ namespace Projet_Final.Pages.Admin
                 dialog2.Content = "La suppression a été effectué.";
 
                 resultat = await dialog2.ShowAsync();
+            }
+        }
+
+        private void gv_liste_produits_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (gv_liste_produits.SelectedIndex >=0)
+            {
+                this.Frame.Navigate(typeof(ModificationAdherent), gv_liste_produits.SelectedIndex);
             }
         }
     }
