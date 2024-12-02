@@ -84,7 +84,8 @@ namespace Projet_Final.Dialogs
 
             if (valide)
             {
-                Adherent a = new Adherent(tbxNomAjout.Text, tbxPrenomAjout.Text, tbxAdresseAjout.Text,calendar_dateAjout.Date.Value.DateTime, tbxMotPassAjout.Text??"");
+                var pass = tbxMotPassAjout.Text;
+                Adherent a = new Adherent(tbxNomAjout.Text, tbxPrenomAjout.Text, tbxAdresseAjout.Text,calendar_dateAjout.Date.Value.DateTime, tbxMotPassAjout.Text);
                 SingletonBD.getInstance().ajouterAdherent(a);
             }
         }

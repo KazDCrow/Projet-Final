@@ -15,7 +15,8 @@ namespace Projet_Final.Classes
         //ObservableCollection<Seance> listeSeance;
         //ObservableCollection<Adherent_Seance> listeAdherentSeance;
         bool connecter;
-        string nom_utilisateur = "null";
+        string nom_utilisateur = "";
+        string type_utilisateur = "";
 
         static SingletonBD instance = null;
         MySqlConnection con;
@@ -23,6 +24,7 @@ namespace Projet_Final.Classes
         internal ObservableCollection<Adherent> ListeAdherent { get => listeAdherent; }
         internal bool Connecter { get => connecter; }
         internal string Nom_utilisateur { get => nom_utilisateur; }
+        internal string Type_utilisateur { get => type_utilisateur; }
 
         public SingletonBD()
         {
@@ -76,22 +78,45 @@ namespace Projet_Final.Classes
                 {
                     connecter = true;
                     nom_utilisateur = a.Prenom + " " + a.Nom;
+                    if (a.Mot_passe != "" && a.Mot_passe != null)
+                    {
+                        type_utilisateur = "admin";
+                    }
+                    else
+                    {
+                        type_utilisateur = "user";
+                    }
                     break;
                 }
             }
             return connecter;
         }
 
+        public void deconnection()
+        {
+            connecter = false;
+            nom_utilisateur = string.Empty;
+            type_utilisateur = string.Empty;
+        }
+
         public void ajouterAdherent(Adherent a)
         {
             MySqlCommand commande = new MySqlCommand();
             commande.Connection = con;
-            commande.CommandText = "Insert into adherent (nom,prenom,adresse, date_naissance) value (@nom, @prenom, @adresse, @date_naissance)";
+            commande.CommandText = "Insert into adherent (nom,prenom,adresse, date_naissance, mot_passe) value (@nom, @prenom, @adresse, @date_naissance, @mot_passe)";
             commande.Parameters.AddWithValue("@nom", a.Nom);
             commande.Parameters.AddWithValue("@prenom", a.Prenom);
             commande.Parameters.AddWithValue("@adresse", a.Adresse);
             commande.Parameters.AddWithValue("@date_naissance", a.Date_naissance);
-
+            if (a.Mot_passe != "")
+            {
+                commande.Parameters.AddWithValue("@mot_passe", a.Mot_passe);
+            }
+            else 
+            {
+                commande.Parameters.AddWithValue("@mot_passe", null);
+            }
+            
             con.Open();
             commande.Prepare();
             commande.ExecuteNonQuery();

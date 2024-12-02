@@ -16,6 +16,7 @@
     <None Remove="Dialogs\DialogueAjout.xaml" />
     <None Remove="Pages\Admin\AdherentPage.xaml" />
     <None Remove="Pages\TestAdherentPage.xaml" />
+    <None Remove="Pages\User\ActiviteUserPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,6 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Dialogs\DialogueAjout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\User\ActiviteUserPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

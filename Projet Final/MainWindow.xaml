@@ -35,6 +35,7 @@
                        Text="Nom d'utilisateur" 
                        FontWeight="Bold" 
                        Margin="0,0,16,0"/>
+                    <Button x:Name="btn_logout" Background="DarkSlateGray" Click="btn_logout_Click" >Déconnexion</Button>
                 </StackPanel>
             </NavigationView.PaneCustomContent>
 

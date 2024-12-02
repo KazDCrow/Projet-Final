@@ -15,15 +15,10 @@ using Windows.Foundation.Collections;
 using Projet_Final.Pages;
 using Projet_Final.Classes;
 using Projet_Final.Pages.Admin;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using Projet_Final.Pages.User;
 
 namespace Projet_Final
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainWindow : Window
     {
         public MainWindow()
@@ -79,19 +74,50 @@ namespace Projet_Final
                 bool connecter = SingletonBD.getInstance().connection(tb_id.Text, tb_pass.Text);
                 if (connecter)
                 {
-                    navView.Visibility = Visibility.Visible;
-                    adminNav_header.Visibility = Visibility.Visible;
-                    adminNav_iActivite.Visibility = Visibility.Visible;
-                    adminNav_iAdherent.Visibility = Visibility.Visible;
-                    adminNav_iSeance.Visibility = Visibility.Visible;
-                    adminNav_iStatitistique.Visibility = Visibility.Visible;
-                    tb_userName.Text = SingletonBD.getInstance().Nom_utilisateur;
-                    mainFrame.Navigate(typeof(AdherentPage));
-                    adminNav_iAdherent.IsSelected = true;
                     login_menu.Visibility = Visibility.Collapsed;
+                    navView.Visibility = Visibility.Visible;
+                    tb_userName.Text = SingletonBD.getInstance().Nom_utilisateur;
+                    if (SingletonBD.getInstance().Type_utilisateur == "admin")
+                    {
+                        adminNav_header.Visibility = Visibility.Visible;
+                        adminNav_iActivite.Visibility = Visibility.Visible;
+                        adminNav_iAdherent.Visibility = Visibility.Visible;
+                        adminNav_iSeance.Visibility = Visibility.Visible;
+                        adminNav_iStatitistique.Visibility = Visibility.Visible;
+                        mainFrame.Navigate(typeof(AdherentPage));
+                        adminNav_iAdherent.IsSelected = true;
+                    }
+                    else
+                    {
+                        userNav_activite.Visibility = Visibility.Visible;
+                        userNav_header.Visibility = Visibility.Visible;
+                        mainFrame.Navigate(typeof(ActiviteUserPage));
+                        userNav_activite.IsSelected = true;
+                    }
                 }
             }
 
+        }
+
+        private void btn_logout_Click(object sender, RoutedEventArgs e)
+        {
+            if (SingletonBD.getInstance().Type_utilisateur == "admin")
+            {
+                adminNav_header.Visibility = Visibility.Collapsed;
+                adminNav_iActivite.Visibility = Visibility.Collapsed;
+                adminNav_iAdherent.Visibility = Visibility.Collapsed;
+                adminNav_iSeance.Visibility = Visibility.Collapsed;
+                adminNav_iStatitistique.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                userNav_activite.Visibility = Visibility.Collapsed;
+                userNav_header.Visibility = Visibility.Collapsed;
+            }
+
+            navView.Visibility = Visibility.Collapsed;
+            tb_userName.Text = string.Empty;
+            login_menu.Visibility = Visibility.Visible;
         }
     }
 }
