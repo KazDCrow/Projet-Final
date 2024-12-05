@@ -31,7 +31,7 @@ namespace Projet_Final.Pages.Admin
         public AdherentPage()
         {
             this.InitializeComponent();
-            SingletonBD.getInstance().getAdherent();
+            SingletonBD.getInstance().getAdherents();
             gv_liste_adherents.ItemsSource = SingletonBD.getInstance().ListeAdherent;
         }
 

@@ -44,7 +44,45 @@ namespace Projet_Final.Dialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            resetErreur();
+            valide = true;
 
+            if (!ValidationAdherent.validatePrenomNom(tbx_nom.Text))
+            {
+                valide = false;
+                tblErreurNom.Text = "Le nom doit contenir entre 3 et 50 lettres";
+            }
+
+            if (cbx_type.Text == "")
+            {
+                valide = false;
+                tblErreurType.Text = "Veuillez choisir un type pour l'activité.";
+            }
+
+            if (tbx_cout.Text == "")
+            {
+                valide = false;
+                tblErreurCout.Text = "Le coût d'organisation ne peut pas être null.";
+            }
+
+            if (tbx_vente.Text == "")
+            {
+                valide = false;
+                tblErreurPrix.Text = "Le prix de vente ne peut pas être null.";
+            }
+
+            if (valide)
+            {
+                
+            }
+        }
+
+        private void resetErreur()
+        {
+            tblErreurNom.Text = string.Empty;
+            tblErreurType.Text = string.Empty;
+            tblErreurCout.Text = string.Empty;
+            tblErreurPrix.Text = string.Empty;
         }
 
         private bool isNumber(string text)

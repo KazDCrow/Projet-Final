@@ -32,9 +32,34 @@ namespace Projet_Final.Pages.Admin
             gv_liste_activites.ItemsSource = SingletonBD.getInstance().ListeActivite;
         }
 
-        private void btn_supprimer_Click(object sender, RoutedEventArgs e)
+        private async void btn_supprimer_Click(object sender, RoutedEventArgs e)
         {
+            Button btn = (Button)sender;
+            Activite a = (Activite)btn.DataContext;
 
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = mainGrid.XamlRoot;
+            dialog.Title = "Attention";
+            dialog.PrimaryButtonText = "Oui";
+            dialog.CloseButtonText = "Annuler";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = "Voulez-vous supprimer cet activité?";
+
+            var resultat = await dialog.ShowAsync();
+
+            if (resultat == ContentDialogResult.Primary) //si on clique sur OUI
+            {
+                SingletonBD.getInstance().supprimerActivite(a.Nom, a.Type);
+                ContentDialog dialog2 = new ContentDialog();
+                dialog2.XamlRoot = mainGrid.XamlRoot;
+                dialog2.Title = "Suppression réalisé";
+                dialog2.IsPrimaryButtonEnabled = false;
+                dialog2.CloseButtonText = "Fermer";
+                dialog2.DefaultButton = ContentDialogButton.Primary;
+                dialog2.Content = "La suppression a été effectué.";
+
+                resultat = await dialog2.ShowAsync();
+            }
         }
 
         private void gv_liste_activites_SelectionChanged(object sender, SelectionChangedEventArgs e)

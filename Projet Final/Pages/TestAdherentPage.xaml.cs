@@ -27,7 +27,7 @@ namespace Projet_Final.Pages
         public TestAdherentPage()
         {
             this.InitializeComponent();
-            SingletonBD.getInstance().getAdherent();
+            SingletonBD.getInstance().getAdherents();
             gv_liste_produits.ItemsSource = SingletonBD.getInstance().ListeAdherent;
 
         }

@@ -33,7 +33,7 @@ namespace Projet_Final.Classes
             listeAdherent = new ObservableCollection<Adherent>();
             listeActivite = new ObservableCollection<Activite>();
             connecter = false;
-            getAdherent();
+            getAdherents();
             getActivites();
         }
 
@@ -45,7 +45,7 @@ namespace Projet_Final.Classes
             return instance;
         }
 
-        public void getAdherent()
+        public void getAdherents()
         {
             listeAdherent.Clear();
 
@@ -154,7 +154,7 @@ namespace Projet_Final.Classes
             commande.ExecuteNonQuery();
             con.Close();
 
-            getAdherent();
+            getAdherents();
         }
 
         public string ajouterAdherentReturnID(Adherent a)
@@ -182,6 +182,24 @@ namespace Projet_Final.Classes
             return id;
         }
 
+        public void ajouterActivite(Activite a)
+        {
+            MySqlCommand commande = new MySqlCommand();
+            commande.Connection = con;
+            commande.CommandText = "Insert into activite (nom,type,cout_organisation, prix_vente) value (@nom, @type, @cout_organisation, @prix_vente)";
+            commande.Parameters.AddWithValue("@nom", a.Nom);
+            commande.Parameters.AddWithValue("@type", a.Type);
+            commande.Parameters.AddWithValue("@cout_organisation", a.Cout_organisation);
+            commande.Parameters.AddWithValue("@prix_vente", a.Prix_vente);
+
+            con.Open();
+            commande.Prepare();
+            commande.ExecuteNonQuery();
+            con.Close();
+
+            getActivites();
+        }
+
         public void supprimerAdherent(string _id)
         {
             MySqlCommand commande = new MySqlCommand();
@@ -193,7 +211,7 @@ namespace Projet_Final.Classes
             commande.Prepare();
             commande.ExecuteNonQuery();
             con.Close();
-            getAdherent();
+            getAdherents();
         }
 
         public void supprimerAdherentWithoutGet(string _id)
@@ -207,6 +225,23 @@ namespace Projet_Final.Classes
             commande.Prepare();
             commande.ExecuteNonQuery();
             con.Close();
+        }
+
+        public void supprimerActivite(string _nom, string _type)
+        {
+            MySqlCommand commande = new MySqlCommand();
+            commande.Connection = con;
+            commande.CommandText = "delete from seance where nom_activite = @nom AND type_activite = @type";
+            commande.Parameters.AddWithValue("@nom", _nom);
+            commande.Parameters.AddWithValue("@type", _type);
+            //a modifier
+            //Il faut supprimer toutes les ligne de adherent_seance en lien avec les séances lié à l'activité
+            con.Open();
+            commande.Prepare();
+            commande.ExecuteNonQuery();
+            con.Close();
+
+            getActivites();
         }
 
         public void modifierAdherent(string _id, Adherent a)
@@ -260,7 +295,33 @@ namespace Projet_Final.Classes
                 commande.ExecuteNonQuery();
                 con.Close();
             }
-            getAdherent();
+            getAdherents();
+        }
+
+        public void modifierActivite(string _nom, string _type)
+        {
+            //On stock les séances
+            List<Seance> listeSeances = new List<Seance>();
+            MySqlCommand commande1 = new MySqlCommand();
+            commande1.Connection = con;
+            commande1.CommandText = "select * from seance where nom_activite = @nom AND type_activite = @type";
+            commande1.Parameters.AddWithValue("@nom", _nom);
+            commande1.Parameters.AddWithValue("@type", _type);
+
+            con.Open();
+            commande1.Prepare();
+            MySqlDataReader reader = commande1.ExecuteReader();
+            while (reader.Read())
+            {
+                int id_seance = reader.GetInt32("id_seance");
+                DateTime date = reader.GetDateTime("date");
+                string heure = reader.GetString("heure");
+                int nb_place = reader.GetInt32("nb_place");
+                Double appeciation_general = reader.GetDouble("appreciation_general");
+                Seance s = new Seance(id_seance, _type, _nom, date, heure, nb_place, appeciation_general);
+                listeSeances.Add(s);
+            }
+
         }
     }
 }
