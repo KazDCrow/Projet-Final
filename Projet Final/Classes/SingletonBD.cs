@@ -11,7 +11,7 @@ namespace Projet_Final.Classes
     internal class SingletonBD
     {
         ObservableCollection<Adherent> listeAdherent;
-        //ObservableCollection<Activite> listeActivite;
+        ObservableCollection<Activite> listeActivite;
         //ObservableCollection<Seance> listeSeance;
         //ObservableCollection<Adherent_Seance> listeAdherentSeance;
         bool connecter;
@@ -22,6 +22,7 @@ namespace Projet_Final.Classes
         MySqlConnection con;
 
         internal ObservableCollection<Adherent> ListeAdherent { get => listeAdherent; }
+        internal ObservableCollection<Activite> ListeActivite { get => listeActivite; }
         internal bool Connecter { get => connecter; }
         internal string Nom_utilisateur { get => nom_utilisateur; }
         internal string Type_utilisateur { get => type_utilisateur; }
@@ -30,8 +31,10 @@ namespace Projet_Final.Classes
         {
             con = new MySqlConnection("Server=cours.cegep3r.info;Database=a2024_420335ri_gr2_1642618-jacob-rouleau;Uid=1642618;Pwd=1642618");
             listeAdherent = new ObservableCollection<Adherent>();
+            listeActivite = new ObservableCollection<Activite>();
             connecter = false;
             getAdherent();
+            getActivites();
         }
 
         public static SingletonBD getInstance()
@@ -71,6 +74,33 @@ namespace Projet_Final.Classes
         }
 
         public Adherent getAdherent(int id) {  return listeAdherent[id]; }
+
+        public void getActivites()
+        {
+            listeActivite.Clear();
+
+            MySqlCommand commande = new MySqlCommand();
+            commande.Connection = con;
+            commande.CommandText = "Select * from activite";
+
+            con.Open();
+            MySqlDataReader reader = commande.ExecuteReader();
+
+            while (reader.Read()) 
+            {
+                string nom = reader.GetString("nom");
+                string type = reader.GetString ("type");
+                double cout_organisation = reader.GetDouble("cout_organisation");
+                double prix_vente = reader.GetDouble("prix_vente");
+
+                Activite a = new Activite(nom,type,cout_organisation, prix_vente);
+                listeActivite.Add(a);
+            }
+            reader.Close() ;
+            con.Close();
+        }
+
+        public Activite getActivite(int id) { return listeActivite[id]; }
 
         public bool connection(string id, string mot_passe)
         {

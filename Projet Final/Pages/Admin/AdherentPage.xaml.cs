@@ -32,7 +32,7 @@ namespace Projet_Final.Pages.Admin
         {
             this.InitializeComponent();
             SingletonBD.getInstance().getAdherent();
-            gv_liste_produits.ItemsSource = SingletonBD.getInstance().ListeAdherent;
+            gv_liste_adherents.ItemsSource = SingletonBD.getInstance().ListeAdherent;
         }
 
         private async void btn_ajouter_Click(object sender, RoutedEventArgs e)
@@ -77,11 +77,11 @@ namespace Projet_Final.Pages.Admin
             }
         }
 
-        private void gv_liste_produits_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void gv_liste_adhrents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (gv_liste_produits.SelectedIndex >=0)
+            if (gv_liste_adherents.SelectedIndex >=0)
             {
-                this.Frame.Navigate(typeof(ModificationAdherent), gv_liste_produits.SelectedIndex);
+                this.Frame.Navigate(typeof(ModificationAdherent), gv_liste_adherents.SelectedIndex);
             }
         }
     }
