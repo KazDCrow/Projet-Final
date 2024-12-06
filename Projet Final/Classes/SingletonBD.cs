@@ -229,18 +229,40 @@ namespace Projet_Final.Classes
 
         public void supprimerActivite(string _nom, string _type)
         {
-            MySqlCommand commande = new MySqlCommand();
-            commande.Connection = con;
-            commande.CommandText = "delete from seance where nom_activite = @nom AND type_activite = @type";
-            commande.Parameters.AddWithValue("@nom", _nom);
-            commande.Parameters.AddWithValue("@type", _type);
-            //a modifier
-            //Il faut supprimer toutes les ligne de adherent_seance en lien avec les séances lié à l'activité
+            //Suppression des association adherent et seance
+            List<Seance> listeSeances = getListSeanceOfActivite(_nom, _type);
+            foreach (Seance s in listeSeances)
+            {
+                con.Open();
+                MySqlCommand commandeDeleteAdherent_seance = new MySqlCommand();
+                commandeDeleteAdherent_seance.Connection = con;
+                commandeDeleteAdherent_seance.CommandText = "delete from adherent_seance where id_seance = @id";
+                commandeDeleteAdherent_seance.Parameters.AddWithValue("@id", s.Id);
+                commandeDeleteAdherent_seance.Prepare();
+                commandeDeleteAdherent_seance.ExecuteNonQuery();
+                con.Close();
+            }
+            //Suppresion des séances
+            MySqlCommand commandeDeleteSeance = new MySqlCommand();
+            commandeDeleteSeance.Connection = con;
+            commandeDeleteSeance.CommandText = "delete from seance where nom_activite = @nom AND type_activite = @type";
+            commandeDeleteSeance.Parameters.AddWithValue("@nom", _nom);
+            commandeDeleteSeance.Parameters.AddWithValue("@type", _type);
             con.Open();
-            commande.Prepare();
-            commande.ExecuteNonQuery();
+            commandeDeleteSeance.Prepare();
+            commandeDeleteSeance.ExecuteNonQuery();
             con.Close();
 
+            //Suppression de l'activité
+            MySqlCommand commandDeleteActivite = new MySqlCommand();
+            commandDeleteActivite.Connection = con;
+            commandDeleteActivite.CommandText = "delete from activite where nom = @nom AND type = @type";
+            commandDeleteActivite.Parameters.AddWithValue("@nom", _nom);
+            commandDeleteActivite.Parameters.AddWithValue("@type", _type);
+            con.Open();
+            commandDeleteActivite.Prepare();
+            commandDeleteActivite.ExecuteNonQuery();
+            con.Close();
             getActivites();
         }
 
@@ -301,6 +323,13 @@ namespace Projet_Final.Classes
         public void modifierActivite(string _nom, string _type)
         {
             //On stock les séances
+            List<Seance> listeSeances = getListSeanceOfActivite(_nom, _type);
+
+        }
+
+        public List<Seance> getListSeanceOfActivite(string _nom, string _type) 
+        {
+            //On stock les séances
             List<Seance> listeSeances = new List<Seance>();
             MySqlCommand commande1 = new MySqlCommand();
             commande1.Connection = con;
@@ -313,7 +342,7 @@ namespace Projet_Final.Classes
             MySqlDataReader reader = commande1.ExecuteReader();
             while (reader.Read())
             {
-                int id_seance = reader.GetInt32("id_seance");
+                int id_seance = reader.GetInt32("id");
                 DateTime date = reader.GetDateTime("date");
                 string heure = reader.GetString("heure");
                 int nb_place = reader.GetInt32("nb_place");
@@ -321,7 +350,9 @@ namespace Projet_Final.Classes
                 Seance s = new Seance(id_seance, _type, _nom, date, heure, nb_place, appeciation_general);
                 listeSeances.Add(s);
             }
-
+            reader.Close();
+            con.Close();
+            return listeSeances;
         }
     }
 }

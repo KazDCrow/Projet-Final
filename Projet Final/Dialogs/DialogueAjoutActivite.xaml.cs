@@ -53,7 +53,7 @@ namespace Projet_Final.Dialogs
                 tblErreurNom.Text = "Le nom doit contenir entre 3 et 50 lettres";
             }
 
-            if (cbx_type.Text == "")
+            if (cbx_type.SelectedItem == null)
             {
                 valide = false;
                 tblErreurType.Text = "Veuillez choisir un type pour l'activité.";
@@ -73,7 +73,8 @@ namespace Projet_Final.Dialogs
 
             if (valide)
             {
-                
+                Activite a = new Activite(tbx_nom.Text, cbx_type.SelectedItem.ToString(), Convert.ToDouble(tbx_cout.Text), Convert.ToDouble(tbx_vente.Text));
+                SingletonBD.getInstance().ajouterActivite(a);
             }
         }
 

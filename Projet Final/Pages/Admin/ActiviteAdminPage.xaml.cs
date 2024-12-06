@@ -57,7 +57,6 @@ namespace Projet_Final.Pages.Admin
                 dialog2.CloseButtonText = "Fermer";
                 dialog2.DefaultButton = ContentDialogButton.Primary;
                 dialog2.Content = "La suppression a été effectué.";
-
                 resultat = await dialog2.ShowAsync();
             }
         }
