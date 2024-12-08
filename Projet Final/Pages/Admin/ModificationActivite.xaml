@@ -43,7 +43,7 @@
                 <TextBox Grid.Column="0" Grid.Row="0" Header="Nom" x:Name="tbx_nom"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" x:Name="tblErreurNom" Foreground="Red" FontSize="15" />
 
-                <TextBox Grid.Row="0" Grid.Column="1" Header="Type" x:Name="tbx_type"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Header="Type" x:Name="cbx_type"/>
                 <TextBlock Grid.Column="1" Grid.Row="1" x:Name="tblErreurType" TextWrapping="Wrap" Foreground="Red" FontSize="15" />
             </Grid>
 
@@ -59,18 +59,17 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Row="0" Grid.Column="0" Header="Cout d'organisation" x:Name="tbx_cout"/>
+                <TextBox Grid.Row="0" Grid.Column="0" Header="Cout d'organisation" x:Name="tbx_cout" TextChanging="tbx_cout_TextChanging"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" x:Name="tblErreurCout" TextWrapping="Wrap" Foreground="Red" FontSize="15" />
 
-                <TextBox Grid.Row="0" Foreground="White" HorizontalAlignment="Stretch" Grid.Column="1" Header="Prix de vente" x:Name="tbx_vente"/>
+                <TextBox Grid.Row="0" Foreground="White" HorizontalAlignment="Stretch" Grid.Column="1" Header="Prix de vente" x:Name="tbx_vente" TextChanging="tbx_prix_TextChanging"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" x:Name="tblErreurPrix" TextWrapping="Wrap" Foreground="Red" FontSize="15" />
             </Grid>
 
-            <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Margin="0 40 0 0">
+            <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Margin="0 40 0 0">
                 <Button x:Name="btn_modifier" Click="btn_modifier_Click" Content="Confirmer la modification" Background="ForestGreen"/>
                 <Button x:Name="btn_annuler" Click="btn_annuler_Click" Content="Annuler"/>
             </StackPanel>
-
         </Grid>
     </ScrollViewer>
 </Page>

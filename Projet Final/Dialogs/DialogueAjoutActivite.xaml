@@ -26,9 +26,8 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Spacing="16" Margin="0 0 0 20">
-            <TextBlock FontWeight="Bold" FontSize="24">Modification de l'activité :</TextBlock>
-            <TextBlock TextDecorations="Underline" x:Name="tbl_nom" FontSize="24"/>
-        </StackPanel>
+                <TextBlock FontWeight="Bold" FontSize="24">Ajout d'une activité</TextBlock>
+            </StackPanel>
 
         <Grid Grid.Row="1" ColumnSpacing="20">
             <Grid.RowDefinitions>

@@ -320,11 +320,60 @@ namespace Projet_Final.Classes
             getAdherents();
         }
 
-        public void modifierActivite(string _nom, string _type)
+        public void modifierActivite(Activite a, string _oldNomm, string _oldType)
         {
-            //On stock les séances
-            List<Seance> listeSeances = getListSeanceOfActivite(_nom, _type);
+            //Suppression des association adherent et seance
+            List<Seance> listeSeances = getListSeanceOfActivite(_oldNomm, _oldType);
+            foreach (Seance s in listeSeances)
+            {
+                con.Open();
+                MySqlCommand commandeDeleteAdherent_seance = new MySqlCommand();
+                commandeDeleteAdherent_seance.Connection = con;
+                commandeDeleteAdherent_seance.CommandText = "delete from adherent_seance where id_seance = @id";
+                commandeDeleteAdherent_seance.Parameters.AddWithValue("@id", s.Id);
+                commandeDeleteAdherent_seance.Prepare();
+                commandeDeleteAdherent_seance.ExecuteNonQuery();
+                con.Close();
+            }
 
+            //Suppresion des séances
+            MySqlCommand commandeDeleteSeance = new MySqlCommand();
+            commandeDeleteSeance.Connection = con;
+            commandeDeleteSeance.CommandText = "delete from seance where nom_activite = @nom AND type_activite = @type";
+            commandeDeleteSeance.Parameters.AddWithValue("@nom", _oldNomm);
+            commandeDeleteSeance.Parameters.AddWithValue("@type", _oldType);
+
+            //supression de l'ancienne activité
+            MySqlCommand commandDeleteActivite = new MySqlCommand();
+            commandDeleteActivite.Connection = con;
+            commandDeleteActivite.CommandText = "delete from activite where nom = @nom AND type = @type";
+            commandDeleteActivite.Parameters.AddWithValue("@nom", _oldNomm);
+            commandDeleteActivite.Parameters.AddWithValue("@type", _oldType);
+
+            //Ajout de l'activité modifié
+            MySqlCommand commandeAddModActivite = new MySqlCommand();
+            commandeAddModActivite.Connection = con;
+            commandeAddModActivite.CommandText = "Insert into activite (nom,type,cout_organisation, prix_vente) value (@nom, @type, @cout_organisation, @prix_vente)";
+            commandeAddModActivite.Parameters.AddWithValue("@nom", a.Nom);
+            commandeAddModActivite.Parameters.AddWithValue("@type", a.Type);
+            commandeAddModActivite.Parameters.AddWithValue("@cout_organisation", a.Cout_organisation);
+            commandeAddModActivite.Parameters.AddWithValue("@prix_vente", a.Prix_vente);
+
+            con.Open();
+            commandeDeleteSeance.Prepare();
+            commandeDeleteSeance.ExecuteNonQuery();
+            con.Close();
+
+            con.Open();
+            commandDeleteActivite.Prepare();
+            commandDeleteActivite.ExecuteNonQuery();
+            con.Close();
+
+            con.Open();
+            commandeAddModActivite.Prepare();
+            commandeAddModActivite.ExecuteNonQuery();
+            con.Close();
+            getActivites();
         }
 
         public List<Seance> getListSeanceOfActivite(string _nom, string _type) 
