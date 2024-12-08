@@ -12,8 +12,7 @@ namespace Projet_Final.Classes
     {
         ObservableCollection<Adherent> listeAdherent;
         ObservableCollection<Activite> listeActivite;
-        //ObservableCollection<Seance> listeSeance;
-        //ObservableCollection<Adherent_Seance> listeAdherentSeance;
+        ObservableCollection<Seance> listeSeance;
         bool connecter;
         string nom_utilisateur = "";
         string type_utilisateur = "";
@@ -23,6 +22,7 @@ namespace Projet_Final.Classes
 
         internal ObservableCollection<Adherent> ListeAdherent { get => listeAdherent; }
         internal ObservableCollection<Activite> ListeActivite { get => listeActivite; }
+        internal ObservableCollection<Seance> ListeSeance { get => listeSeance; }
         internal bool Connecter { get => connecter; }
         internal string Nom_utilisateur { get => nom_utilisateur; }
         internal string Type_utilisateur { get => type_utilisateur; }
@@ -32,9 +32,11 @@ namespace Projet_Final.Classes
             con = new MySqlConnection("Server=cours.cegep3r.info;Database=a2024_420335ri_gr2_1642618-jacob-rouleau;Uid=1642618;Pwd=1642618");
             listeAdherent = new ObservableCollection<Adherent>();
             listeActivite = new ObservableCollection<Activite>();
+            listeSeance = new ObservableCollection<Seance>();
             connecter = false;
             getAdherents();
             getActivites();
+            getSeances();
         }
 
         public static SingletonBD getInstance()
@@ -101,6 +103,31 @@ namespace Projet_Final.Classes
         }
 
         public Activite getActivite(int id) { return listeActivite[id]; }
+
+        public void getSeances()
+        {
+            listeSeance.Clear();
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = con;
+            command.CommandText = "Select * from seance order by nom_activite ASC";
+            con.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                int id_seance = reader.GetInt32("id");
+                string nom = reader.GetString("nom_activite");
+                string type = reader.GetString("type_activite");
+                DateTime date = reader.GetDateTime("date");
+                string heure = reader.GetString("heure");
+                int nb_place = reader.GetInt32("nb_place");
+                Double appeciation_general = reader.GetDouble("appreciation_general");
+                Seance s = new Seance(id_seance, nom, type, date, heure, nb_place, appeciation_general);
+                listeSeance.Add(s);
+            }
+            reader.Close();
+            con.Close();
+        }
 
         public bool connection(string id, string mot_passe)
         {

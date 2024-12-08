@@ -47,7 +47,7 @@ namespace Projet_Final
                     mainFrame.Navigate(typeof(AdherentPage));
                     break;
                 case "adminNav_iSeance":
-                    mainFrame.Navigate(typeof(ActiviteAdminPage));
+                    mainFrame.Navigate(typeof(SeanceAdminPage));
                     break;
 
                 case "adminNav_iActivite":

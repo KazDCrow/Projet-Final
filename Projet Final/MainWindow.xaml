@@ -19,7 +19,7 @@
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="Administrateur" Name="adminNav_header" Visibility="Collapsed"/>
                 <NavigationViewItem Content="Adhérents" x:Name="adminNav_iAdherent" Icon="ContactInfo" Visibility="Collapsed"/>
-                <NavigationViewItem Content="Séances" x:Name="adminNav_iSeance" Icon="Calendar" Visibility="Collapsed"/>
+                <NavigationViewItem Content="Séances" x:Name="adminNav_iSeance" Icon="Calendar" Visibility="Visible"/>
                 <NavigationViewItem Content="Activités" x:Name="adminNav_iActivite" Icon="Camera" Visibility="Visible"/>
                 <NavigationViewItem Content="Statistique" x:Name="adminNav_iStatitistique" Icon="Calculator" Visibility="Collapsed"/>
 
