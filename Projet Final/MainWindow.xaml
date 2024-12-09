@@ -10,7 +10,7 @@
     Title="Projet Final">
 
     <Grid>
-        <NavigationView x:Name="navView" Visibility="Visible"
+        <NavigationView x:Name="navView" Visibility="Collapsed"
          PaneDisplayMode="Top"
          IsBackButtonVisible="Collapsed"
          IsSettingsVisible="False"
@@ -19,8 +19,8 @@
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="Administrateur" Name="adminNav_header" Visibility="Collapsed"/>
                 <NavigationViewItem Content="Adhérents" x:Name="adminNav_iAdherent" Icon="ContactInfo" Visibility="Collapsed"/>
-                <NavigationViewItem Content="Séances" x:Name="adminNav_iSeance" Icon="Calendar" Visibility="Visible"/>
-                <NavigationViewItem Content="Activités" x:Name="adminNav_iActivite" Icon="Camera" Visibility="Visible"/>
+                <NavigationViewItem Content="Séances" x:Name="adminNav_iSeance" Icon="Calendar" Visibility="Collapsed"/>
+                <NavigationViewItem Content="Activités" x:Name="adminNav_iActivite" Icon="Camera" Visibility="Collapsed"/>
                 <NavigationViewItem Content="Statistique" x:Name="adminNav_iStatitistique" Icon="Calculator" Visibility="Collapsed"/>
 
                 <NavigationViewItemHeader Content="Choix des activités" Name="userNav_header" Visibility="Collapsed"/>
@@ -43,7 +43,7 @@
 
         </NavigationView>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="700" Name="login_menu" Visibility="Collapsed">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="700" Name="login_menu" Visibility="Visible">
             <StackPanel BorderBrush="LightGray" CornerRadius="25" BorderThickness="2" Spacing="40" Padding="40">
                 <TextBlock TextAlignment="Center" FontSize="24" FontWeight="SemiBold" >Connexion</TextBlock>
 

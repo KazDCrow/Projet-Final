@@ -11,7 +11,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <ScrollViewer>
-        <Grid Padding="40">
+        <Grid Padding="40" x:Name="mainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -39,7 +39,7 @@
                 <TextBlock Text="Appréciation générale" Grid.Column="5" TextAlignment="Center" FontWeight="SemiBold"/>
             </Grid>
             
-            <ListView x:Name="lv_liste_seances" Grid.Row="2" HorizontalAlignment="Center" SelectionChanged="">
+            <ListView x:Name="lv_liste_seances" Grid.Row="2" HorizontalAlignment="Center" SelectionChanged="lv_liste_seances_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="Classes:Seance">
                         <Grid ColumnSpacing="40" BorderThickness="0 0 0 1" Padding="0 0 0 10" BorderBrush="gray">

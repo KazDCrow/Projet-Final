@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Projet_Final.Pages.Admin.ModificationSeancePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Projet_Final.Pages.Admin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Padding="20" RowSpacing="10" Width="Auto" ColumnSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Spacing="16" Margin="0 0 0 20">
+            <TextBlock FontWeight="Bold" FontSize="24">Modification de la séance : </TextBlock>
+            <TextBlock x:Name="tbx_id" FontWeight="Bold" FontSize="24" TextDecorations="Underline"/>
+        </StackPanel>
+
+        <ComboBox Grid.Row="1" Grid.Column="0" Header="Type de l'activité" HorizontalAlignment="Stretch" x:Name="cbx_type" SelectionChanged="cbx_type_SelectionChanged"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" Header="Nom de l'activité" HorizontalAlignment="Stretch" x:Name="cbx_nom" PlaceholderText="Veuillez choisir un type"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="2" x:Name="tblErreurType" TextWrapping="Wrap" Foreground="Red" FontSize="15" />
+        <TextBlock Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" x:Name="tblErreurNom" Foreground="Red" FontSize="15" />
+
+        <CalendarDatePicker Grid.Row="3" Grid.Column="0" Header="Date de la séance" x:Name="calendar_date" HorizontalAlignment="Stretch" MinDate="{x:Bind MinDateNaissance}"/>
+        <TextBox Grid.Row="3" Foreground="White" HorizontalAlignment="Stretch" Grid.Column="1" Header="Heure de la séance" x:Name="tbx_heure" PlaceholderText="Ex: 11h10, 01h03"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" x:Name="tblErreurDate" TextWrapping="Wrap" Foreground="Red" FontSize="15" />
+        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="tblErreurHeure" TextWrapping="Wrap" Foreground="Red" FontSize="15" />
+
+        <TextBox Grid.Row="5" Grid.Column="0" Header="Nombre de place" x:Name="tbx_place" TextChanging="tbx_place_TextChanging"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" x:Name="tblErreurPlace" TextWrapping="Wrap" Foreground="Red" FontSize="15"/>
+
+        <StackPanel Orientation="Horizontal" Spacing="20" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Margin="0 10 0 0">
+            <Button x:Name="btn_modifier" Click="btn_modifierClick" Content="Confirmer la modification" Background="ForestGreen"/>
+            <Button x:Name="btn_annuler" Click="btn_annuler_Click" Content="Annuler"/>
+        </StackPanel>
+    </Grid>
+</Page>

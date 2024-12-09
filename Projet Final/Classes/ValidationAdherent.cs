@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +55,44 @@ namespace Projet_Final.Classes
             {
                 return false;
             }
+        }
+
+        public static bool isNumber(char text)
+        {
+            try
+            {
+                int i = Convert.ToInt32(text);
+                if (i < 0 || i == 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public static bool validateHeureSeance(string heure)
+        {
+            var liste = heure.ToCharArray();
+            if (liste.Length < 5) { return false; }
+            for (int i = 0; i < liste.Length; i++)
+            {
+                if (i == 2 && (liste[i] != 'h' && liste[i] != 'H'))
+                {
+                    return false;
+                }
+                else
+                {
+                    if (!isNumber(liste[i]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }

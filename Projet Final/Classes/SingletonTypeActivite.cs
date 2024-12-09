@@ -15,17 +15,17 @@ namespace Projet_Final.Classes
 
         static SingletonTypeActivite instance = null;
 
-        public SingletonTypeActivite()
-        {
-
-        }
-
         public static SingletonTypeActivite getInstance()
         {
             if (instance == null)
                 instance = new SingletonTypeActivite();
 
             return instance;
+        }
+
+        public int getIndexOf(string str)
+        {
+           return listeTypes.IndexOf(str);
         }
     }
 }
