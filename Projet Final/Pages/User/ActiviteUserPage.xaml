@@ -5,11 +5,61 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Projet_Final.Pages.User"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:Classes="using:Projet_Final.Classes"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Padding="40" x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" FontSize="26" FontWeight="SemiBold" TextDecorations="Underline" Foreground="ForestGreen" Text="Les séances disponible pour chaque activité" Margin="0 0 0 40"/>
+
+        <ComboBox Grid.Row="1" x:Name="cbx_nom_activite" HorizontalAlignment="Stretch" Header="Nom de l'activité" SelectionChanged="cbx_nom_activite_SelectionChanged" Margin="0 0 0 40"/>
+
+        <TextBlock Grid.Row="2" Text="Séances disponible pour l'activité : " FontSize="24" Margin="0 0 0 20"/>
+
+        <Grid Grid.Row="3" ColumnSpacing="40" Margin="3 0 0 5"  Padding="0 0 0 10" HorizontalAlignment="Center" BorderThickness="0 0 0 4" BorderBrush="Green">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Date" Grid.Column="0" TextAlignment="Center" FontWeight="SemiBold"/>
+            <TextBlock Text="Heure" Grid.Column="1" TextAlignment="Center" FontWeight="SemiBold"/>
+            <TextBlock Text="Appréciation générale" Grid.Column="2" TextAlignment="Center" FontWeight="SemiBold"/>
+        </Grid>
+
+        <ListView Grid.Row="4" Visibility="Collapsed" x:Name="lv_seances" HorizontalAlignment="Center">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="Classes:Seance">
+                    <Grid ColumnSpacing="40" BorderThickness="0 0 0 1" Padding="0 0 0 5" BorderBrush="gray">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{x:Bind Nom_activite}" Visibility="Collapsed"/>
+                        <TextBlock Text="{x:Bind Type_activite}"  Visibility="Collapsed"/>
+
+                        <TextBlock Text="{x:Bind DateStr}" Grid.Column="0" TextAlignment="Center"  VerticalAlignment="Center"/>
+                        <TextBlock Text="{x:Bind Heure}" Grid.Column="1" TextAlignment="Center"  VerticalAlignment="Center"/>
+                        <TextBlock Text="{x:Bind Appreciation_general}" Grid.Column="2" TextAlignment="Center"  VerticalAlignment="Center"/>
+                        <Button Content="+" x:Name="btn_inscription" Click="btn_inscription_Click" Grid.Column="3" Background="Transparent" Padding="5 0 5 2"  VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </Grid>
 </Page>

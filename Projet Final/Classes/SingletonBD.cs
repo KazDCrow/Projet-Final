@@ -14,8 +14,10 @@ namespace Projet_Final.Classes
         ObservableCollection<Activite> listeActivite;
         ObservableCollection<Seance> listeSeance;
         ObservableCollection<string> listeActiviteForType;
+        ObservableCollection<string> listeNomActivites;
 
         bool connecter;
+        string id_utilistaeur = "";
         string nom_utilisateur = "";
         string type_utilisateur = "";
 
@@ -26,6 +28,7 @@ namespace Projet_Final.Classes
         internal ObservableCollection<Activite> ListeActivite { get => listeActivite; }
         internal ObservableCollection<Seance> ListeSeance { get => listeSeance; }
         internal ObservableCollection<string> ListeActiviteForType { get => listeActiviteForType; }
+        internal ObservableCollection<string> ListeNomActivites { get => listeNomActivites; }
 
         internal bool Connecter { get => connecter; }
         internal string Nom_utilisateur { get => nom_utilisateur; }
@@ -38,6 +41,7 @@ namespace Projet_Final.Classes
             listeActivite = new ObservableCollection<Activite>();
             listeSeance = new ObservableCollection<Seance>();
             listeActiviteForType = new ObservableCollection<string>();
+            listeNomActivites = new ObservableCollection<string>();
             connecter = false;
             getAdherents();
             getActivites();
@@ -129,6 +133,17 @@ namespace Projet_Final.Classes
             con.Close();
         }
 
+        public void getNomActivites()
+        {
+            listeNomActivites.Clear();
+            getActivites();
+
+            foreach (Activite a in listeActivite)
+            {
+                listeNomActivites.Add(a.Nom);
+            }
+        }
+
         public void emptyActiviteForType ()
         {
             listeActiviteForType.Clear(); 
@@ -153,12 +168,99 @@ namespace Projet_Final.Classes
                 DateTime date = reader.GetDateTime("date");
                 string heure = reader.GetString("heure");
                 int nb_place = reader.GetInt32("nb_place");
-                Double appeciation_general = reader.GetDouble("appreciation_general");
+                Double appeciation_general;
+                try
+                {
+                    appeciation_general = reader.GetDouble("appreciation_general");
+                }
+                catch (Exception)
+                {
+                    appeciation_general = 0;
+                }
                 Seance s = new Seance(id_seance, type, nom, date, heure, nb_place, appeciation_general);
                 listeSeance.Add(s);
             }
             reader.Close();
             con.Close();
+        }
+
+        public void getSeanceAtivite(int id)
+        {
+            Activite a = getActivite(id);
+
+            if (a != null)
+            {
+                listeSeance.Clear();
+                MySqlCommand command = new MySqlCommand();
+                command.Connection = con;
+                command.CommandText = "select * from seance s left join adherent_seance a_s on s.id = a_s.id_seance and a_s.id_adherent = @id where nom_activite = @nom and type_activite = @type and id_adherent is null";
+                command.Parameters.AddWithValue("@nom", a.Nom);
+                command.Parameters.AddWithValue("@type", a.Type);
+                command.Parameters.AddWithValue("@id", id_utilistaeur);
+                con.Open();
+                command.Prepare();
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int id_seance = reader.GetInt32("id");
+                    string nom = reader.GetString("nom_activite");
+                    string type = reader.GetString("type_activite");
+                    DateTime date = reader.GetDateTime("date");
+                    string heure = reader.GetString("heure");
+                    int nb_place = reader.GetInt32("nb_place");
+                    Double appeciation_general;
+                    try
+                    {
+                        appeciation_general = reader.GetDouble("appreciation_general");
+                    }
+                    catch (Exception)
+                    {
+                        appeciation_general = 0;
+                    }
+                    Seance s = new Seance(id_seance, type, nom, date, heure, nb_place, appeciation_general);
+                    listeSeance.Add(s);
+                }
+
+                reader.Close();
+                con.Close();
+            }
+        }
+
+        public void getSeanceForAdherent()
+        {
+            ListeSeance.Clear();
+
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = con;
+            command.CommandText = "select * from seance s inner join adherent_seance a_s on id_seance = id where id_adherent = @id";
+            command.Parameters.AddWithValue("@id", id_utilistaeur);
+
+            con.Open();
+            command.Prepare();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int id_seance = reader.GetInt32("id");
+                string nom = reader.GetString("nom_activite");
+                string type = reader.GetString("type_activite");
+                DateTime date = reader.GetDateTime("date");
+                string heure = reader.GetString("heure");
+                int nb_place = reader.GetInt32("nb_place");
+                Double appeciation_general;
+                try
+                {
+                    appeciation_general = reader.GetDouble("appreciation_general");
+                }
+                catch (Exception)
+                {
+                    appeciation_general = 0;
+                }
+                Seance s = new Seance(id_seance, type, nom, date, heure, nb_place, appeciation_general);
+                listeSeance.Add(s);
+            }
+            reader.Close();
+            con.Close() ;          
         }
 
         public bool connection(string id, string mot_passe)
@@ -168,6 +270,7 @@ namespace Projet_Final.Classes
                 if (a.Id == id && a.Mot_passe == mot_passe)
                 {
                     connecter = true;
+                    id_utilistaeur = a.Id;
                     nom_utilisateur = a.Prenom + " " + a.Nom;
                     if (a.Mot_passe != "" && a.Mot_passe != null)
                     {
@@ -188,6 +291,21 @@ namespace Projet_Final.Classes
             connecter = false;
             nom_utilisateur = string.Empty;
             type_utilisateur = string.Empty;
+            id_utilistaeur = string.Empty;
+        }
+
+        public void inscriptionSeance(int id_seance)
+        {
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = con;
+            command.CommandText = "insert into adherent_seance (id_adherent, id_seance) value (@adherent, @seance)";
+            command.Parameters.AddWithValue("@adherent", id_utilistaeur);
+            command.Parameters.AddWithValue("@seance", id_seance);
+
+            con.Open();
+            command.Prepare();
+            command.ExecuteNonQuery();
+            con.Close();
         }
 
         public void ajouterAdherent(Adherent a)
@@ -494,7 +612,7 @@ namespace Projet_Final.Classes
             getSeances();
         }
 
-        public List<Seance> getListSeanceOfActivite(string _nom, string _type) 
+        private List<Seance> getListSeanceOfActivite(string _nom, string _type) 
         {
             //On stock les séances
             List<Seance> listeSeances = new List<Seance>();

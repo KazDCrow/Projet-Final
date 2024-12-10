@@ -58,6 +58,14 @@ namespace Projet_Final
                     mainFrame.Navigate(typeof(TestAdherentPage));
                     break;
 
+                case "userNav_activite":
+                    mainFrame.Navigate(typeof(ActiviteUserPage));
+                    break;
+
+                case "userNav_seance":
+                    mainFrame.Navigate(typeof(SeanceUserPage));
+                    break;
+
                 default:
                     break;
             }
@@ -91,6 +99,7 @@ namespace Projet_Final
                     else
                     {
                         userNav_activite.Visibility = Visibility.Visible;
+                        userNav_seance.Visibility = Visibility.Visible;
                         userNav_header.Visibility = Visibility.Visible;
                         mainFrame.Navigate(typeof(ActiviteUserPage));
                         userNav_activite.IsSelected = true;
@@ -113,6 +122,7 @@ namespace Projet_Final
             else
             {
                 userNav_activite.Visibility = Visibility.Collapsed;
+                userNav_seance.Visibility= Visibility.Collapsed;
                 userNav_header.Visibility = Visibility.Collapsed;
             }
 

@@ -25,6 +25,7 @@
 
                 <NavigationViewItemHeader Content="Choix des activités" Name="userNav_header" Visibility="Collapsed"/>
                 <NavigationViewItem Content="Activités" x:Name="userNav_activite" Icon="Camera" Visibility="Collapsed"/>
+                <NavigationViewItem Content="Séances" x:Name="userNav_seance" Icon="Calendar" Visibility="Collapsed"/>
             </NavigationView.MenuItems>
 
             <NavigationView.PaneCustomContent>
