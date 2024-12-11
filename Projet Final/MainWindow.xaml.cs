@@ -26,6 +26,7 @@ namespace Projet_Final
             this.InitializeComponent();
             SingletonBD.getInstance();
             SingletonNavigation.getInstance().NavigationView = navView;
+            SingletonMainwindow.getInstance().mainWindow = this;
         }
 
         private void navView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

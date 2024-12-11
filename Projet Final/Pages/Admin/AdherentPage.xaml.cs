@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using MySqlX.XDevAPI;
 using Projet_Final.Classes;
 using Projet_Final.Dialogs;
 using System;
@@ -83,6 +84,25 @@ namespace Projet_Final.Pages.Admin
             {
                 this.Frame.Navigate(typeof(ModificationAdherent), gv_liste_adherents.SelectedIndex);
             }
+        }
+
+        private async void btn_exporter_Click(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileSavePicker();
+
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(SingletonMainwindow.getInstance().mainWindow);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hWnd);
+
+            picker.SuggestedFileName = "adherents";
+            picker.FileTypeChoices.Add("Fichier texte", new List<string>() { ".csv" });
+
+            //crée le fichier
+            Windows.Storage.StorageFile monFichier = await picker.PickSaveFileAsync();
+
+            //écrit dans le fichier chacune des lignes du tableau
+            //une boucle sera faite sur la collection et prendra chacun des objets de celle-ci
+            await Windows.Storage.FileIO.WriteLinesAsync(monFichier, SingletonBD.getInstance().ListeAdherent.ToList().ConvertAll(x => x.ToString()));
+
         }
     }
 }

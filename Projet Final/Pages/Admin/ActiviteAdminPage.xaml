@@ -19,7 +19,10 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Margin="30 30 0 0" FontSize="32" FontWeight="SemiBold" TextDecorations="Underline" VerticalAlignment="Center" Grid.Row="0">Liste des activités</TextBlock>
+        <StackPanel Orientation="Horizontal" Margin="30 30 0 0" Grid.Row="0" VerticalAlignment="Center" Spacing="20">
+            <TextBlock  FontSize="32" FontWeight="SemiBold" TextDecorations="Underline" VerticalAlignment="Center">Liste des activités</TextBlock>
+            <Button x:Name="btn_exporter" Content="Exporter en csv" VerticalAlignment="Center" Margin="0 8 0 0" Click="btn_exporter_Click"/>
+        </StackPanel>
         <Button Background="Transparent" Margin="0 30 30 0" BorderThickness="0" Name="btn_ajouter" Click="btn_ajouter_Click" FontSize="18" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center">+ Ajouter une activité</Button>
 
         <GridView x:Name="gv_liste_activites" Margin="20" Grid.Row="1" SelectionChanged="gv_liste_activites_SelectionChanged">

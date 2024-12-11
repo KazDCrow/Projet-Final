@@ -42,5 +42,10 @@ namespace Projet_Final.Classes
         public int Nb_adherent { get { return nb_adherent; } set { nb_adherent = value; } }
         public int Nb_seance { get { return nb_seance; } set { nb_seance = value; } }
         public double Appreciation { get { return appreciation; } set { appreciation = value; } }
+
+        public override string? ToString()
+        {
+            return nom + ";" + type + ";" + cout_organisation + ";" + prix_vente;
+        }
     }
 }

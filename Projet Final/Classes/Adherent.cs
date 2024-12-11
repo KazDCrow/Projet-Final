@@ -48,6 +48,9 @@ namespace Projet_Final.Classes
         public string AgeStr {  get { return age + " ans"; } }
         public string Mot_passe { get {return mot_passe; } set { mot_passe = value; } }
 
-
+        public override string? ToString()
+        {
+            return id + ";" + nom + ";" + prenom + ";" + adresse + ";" + date_naissance.ToString("yyyy-MM-dd") + ";" + age + ";" + mot_passe;
+        }
     }
 }
