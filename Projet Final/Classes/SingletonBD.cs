@@ -639,5 +639,70 @@ namespace Projet_Final.Classes
             con.Close();
             return listeSeances;
         }
+
+        public int getTotalParticipant()
+        {
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = con;
+            command.CommandText = "call p_get_total_participant()";
+            con.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            int total = 0;
+            while (reader.Read())
+            {
+                total = reader.GetInt32("total_participant");
+            }
+            reader.Close() ;
+            con.Close();
+            return total;
+        }
+
+        public int getTotalActivite()
+        {
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = con;
+            command.CommandText = "select count(*) as total from activite";
+            con.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            int total = 0;
+            while (reader.Read())
+            {
+                total = reader.GetInt32("total");
+            }
+            reader.Close();
+            con.Close();
+            return total;
+        }
+
+        public List<Activite> getTotalAdherentByActivite()
+        {
+            List<Activite> activites = new List<Activite>();
+            MySqlCommand command = new MySqlCommand(); 
+            command.Connection = con;
+            command.CommandText = "select a.nom, a.type, count(a_s.id_adherent) as nb_adherent, count(a_s.id_seance) as nb_seance, round((sum(a_s.appreciation)/count(a_s.appreciation)),2) as note from activite a left join seance s on nom = nom_activite and type = type_activite left join adherent_seance a_s on s.id = a_s.id_seance group by a.nom, a.type order by a.nom,a.type";
+            con.Open();
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string nom = reader.GetString("nom");
+                string type = reader.GetString("type");
+                int nb_adherent = reader.GetInt32("nb_adherent");
+                int nb_seance = reader.GetInt32("nb_seance");
+                double appreciation;
+                if (!reader.IsDBNull(reader.GetOrdinal("note")))
+                {
+                    appreciation = reader.GetDouble("note");
+                }
+                else
+                {
+                    appreciation = 0;    
+                }
+                Activite a = new Activite(nom,type,nb_adherent,nb_seance,appreciation);
+                activites.Add(a);
+            }
+            reader.Close();
+            con.Close();
+            return activites;
+        }
     }
 }

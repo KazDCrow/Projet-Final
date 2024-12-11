@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Projet_Final.Pages.Admin.StatistiquePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Projet_Final.Pages.Admin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:Classes="using:Projet_Final.Classes"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+
+            <TextBlock Text="Les statistiques" FontWeight="Bold" FontSize="32" Foreground="ForestGreen" TextDecorations="Underline" Margin="0 0 0 20" Grid.ColumnSpan="2"/>
+
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0 0 0 10" Spacing="5">
+                <TextBlock Text="Nombre d'adhérents : "/>
+                <TextBlock x:Name="tbx_nb_adherent"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 0 0 20" Spacing="5">
+                <TextBlock Text="Nombre d'activités : "/>
+                <TextBlock x:Name="tbx_nb_activite"/>
+            </StackPanel>
+
+            <TextBlock Text="Nombre d'adhérent par activité" Margin="0 0 0 30" FontWeight="SemiBold" FontSize="18" Grid.Row="3" Grid.ColumnSpan="2"  />
+            <Grid Grid.Row="4" Margin="15 0 0 0" ColumnSpacing="10" BorderThickness="0 0 0 1" BorderBrush="LightSlateGray" Padding="0 0 0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Nom" Grid.Column="0"/>
+                <TextBlock Text="Type"  Grid.Column="1"/>
+                <TextBlock Text="Nombre adhérent"  Grid.Column="2"/>
+                <TextBlock Text="Nombre séance"  Grid.Column="3"/>
+                <TextBlock Text="Moyenne note"  Grid.Column="4"/>
+
+            </Grid>
+            <ListView x:Name="lv_activite" Grid.Row="5">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="Classes:Activite">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="110"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{x:Bind Nom}"  Grid.Column="0"/>
+                            <TextBlock Text="{x:Bind Type}"  Grid.Column="1"/>
+                            <TextBlock Text="{x:Bind Nb_adherent}"  Grid.Column="2"/>
+                            <TextBlock Text="{x:Bind Nb_seance}"  Grid.Column="3"/>
+                            <TextBlock Text="{x:Bind Appreciation}"  Grid.Column="4"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ScrollViewer>
+</Page>

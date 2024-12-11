@@ -55,7 +55,7 @@ namespace Projet_Final
                     break;
 
                 case "adminNav_iStatitistique":
-                    mainFrame.Navigate(typeof(TestAdherentPage));
+                    mainFrame.Navigate(typeof(StatistiquePage));
                     break;
 
                 case "userNav_activite":
@@ -81,8 +81,11 @@ namespace Projet_Final
             else
             {
                 bool connecter = SingletonBD.getInstance().connection(tb_id.Text, tb_pass.Text);
+                
                 if (connecter)
                 {
+                    tb_id.Text = string.Empty;
+                    tb_pass.Text = string.Empty;
                     login_menu.Visibility = Visibility.Collapsed;
                     navView.Visibility = Visibility.Visible;
                     tb_userName.Text = SingletonBD.getInstance().Nom_utilisateur;

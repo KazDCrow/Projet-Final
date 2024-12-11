@@ -22,6 +22,7 @@
     <None Remove="Pages\Admin\ModificationAdherent.xaml" />
     <None Remove="Pages\Admin\ModificationSeancePage.xaml" />
     <None Remove="Pages\Admin\SeanceAdminPage.xaml" />
+    <None Remove="Pages\Admin\StatistiquePage.xaml" />
     <None Remove="Pages\TestAdherentPage.xaml" />
     <None Remove="Pages\User\ActiviteUserPage.xaml" />
     <None Remove="Pages\User\SeanceUserPage.xaml" />
@@ -53,6 +54,11 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Admin\StatistiquePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\User\SeanceUserPage.xaml">
