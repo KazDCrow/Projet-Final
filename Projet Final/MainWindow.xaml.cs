@@ -80,12 +80,13 @@ namespace Projet_Final
             }
             else
             {
-                bool connecter = SingletonBD.getInstance().connection(tb_id.Text, tb_pass.Text);
+                string pass = pb_pass.Password;
+                bool connecter = SingletonBD.getInstance().connection(tb_id.Text, pb_pass.Password);
                 
                 if (connecter)
                 {
                     tb_id.Text = string.Empty;
-                    tb_pass.Text = string.Empty;
+                    pb_pass.Password = string.Empty;
                     login_menu.Visibility = Visibility.Collapsed;
                     navView.Visibility = Visibility.Visible;
                     tb_userName.Text = SingletonBD.getInstance().Nom_utilisateur;
@@ -107,6 +108,10 @@ namespace Projet_Final
                         mainFrame.Navigate(typeof(ActiviteUserPage));
                         userNav_activite.IsSelected = true;
                     }
+                }
+                else
+                {
+                    error_id.Text = "Identifiant ou mot de passe invalide";
                 }
             }
 

@@ -704,5 +704,19 @@ namespace Projet_Final.Classes
             con.Close();
             return activites;
         }
+
+        public void desinscriptionSeance(int id_seance)
+        {
+            MySqlCommand command = new MySqlCommand();
+            command.Connection= con;
+            command.CommandText = "delete from adherent_seance where id_seance = @id_seance and id_adherent = @id_adherent";
+            command.Parameters.AddWithValue("@id_seance", id_seance);
+            command.Parameters.AddWithValue("@id_adherent", id_utilistaeur);
+
+            con.Open();
+            command.Prepare();
+            command.ExecuteNonQuery();
+            con.Close();
+        }
     }
 }

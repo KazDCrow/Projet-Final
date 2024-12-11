@@ -57,7 +57,7 @@
 
                     <StackPanel HorizontalAlignment="Center" Width="240" Spacing="8">
                         <TextBlock FontSize="16" FontStyle="Italic">Mot de passe</TextBlock>
-                        <TextBox Name="tb_pass" HorizontalAlignment="Stretch"></TextBox>
+                        <PasswordBox Name="pb_pass" HorizontalAlignment="Stretch"></PasswordBox>
                     </StackPanel>
                 </StackPanel>
 

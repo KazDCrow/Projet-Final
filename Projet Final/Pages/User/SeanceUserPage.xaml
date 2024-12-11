@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Padding="40">
+    <Grid Padding="40" x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -55,7 +55,7 @@
                         <TextBlock Text="{x:Bind DateStr}" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Bind Heure}" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Bind Appreciation_general}" Grid.Column="4" Width="20" TextAlignment="Center"/>
-                            <Button FontSize="8" Background="Transparent" Grid.Column="5" x:Name="btn_delete" Click="btn_delete_Click">X</Button>
+                        <Button FontSize="8" Background="Transparent" Grid.Column="5" x:Name="btn_delete" Click="btn_delete_Click">X</Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

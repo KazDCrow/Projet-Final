@@ -21,7 +21,7 @@
 
         <TextBlock Grid.Row="0" FontSize="26" FontWeight="SemiBold" TextDecorations="Underline" Foreground="ForestGreen" Text="Les séances disponible pour chaque activité" Margin="0 0 0 40"/>
 
-        <ComboBox Grid.Row="1" x:Name="cbx_nom_activite" HorizontalAlignment="Stretch" Header="Nom de l'activité" SelectionChanged="cbx_nom_activite_SelectionChanged" Margin="0 0 0 40"/>
+        <ComboBox Grid.Row="1" x:Name="cbx_nom_activite" HorizontalAlignment="Stretch" Header="Nom de l'activité" SelectionChanged="cbx_nom_activite_SelectionChanged" Margin="0 0 0 40" PlaceholderText="Choisissez une activité"/>
 
         <TextBlock Grid.Row="2" Text="Séances disponible pour l'activité : " FontSize="24" Margin="0 0 0 20"/>
 

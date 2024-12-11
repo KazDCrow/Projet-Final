@@ -31,9 +31,35 @@ namespace Projet_Final.Pages.User
             lv_liste_seances.ItemsSource = SingletonBD.getInstance().ListeSeance;
         }
 
-        private void btn_delete_Click(object sender, RoutedEventArgs e)
+        private async void btn_delete_Click(object sender, RoutedEventArgs e)
         {
+            Button btn = (Button)sender;
+            Seance s = (Seance)btn.DataContext;
 
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = mainGrid.XamlRoot;
+            dialog.Title = "Attention";
+            dialog.PrimaryButtonText = "Oui";
+            dialog.CloseButtonText = "Annuler";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = "Voulez-vous vraiment vous désinscrire de cette séance?";
+
+            var resultat = await dialog.ShowAsync();
+
+            if (resultat == ContentDialogResult.Primary) //si on clique sur OUI
+            {
+                SingletonBD.getInstance().desinscriptionSeance(s.Id);
+                ContentDialog dialog2 = new ContentDialog();
+                dialog2.XamlRoot = mainGrid.XamlRoot;
+                dialog2.Title = "Désinscription réalisé";
+                dialog2.IsPrimaryButtonEnabled = false;
+                dialog2.CloseButtonText = "Fermer";
+                dialog2.DefaultButton = ContentDialogButton.Primary;
+                dialog2.Content = "Vous n'êtes plus incrit a cette séance.";
+
+                resultat = await dialog2.ShowAsync();
+                SingletonBD.getInstance().getSeanceForAdherent();
+            }
         }
     }
 }
